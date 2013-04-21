@@ -1,0 +1,47 @@
+BEGIN:VCALENDAR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+PRODID:-//clubnix//lewinp v1.0//EN
+VERSION:2.0
+<?php
+
+foreach($events as $event) {
+	echo 'BEGIN:VEVENT' . PHP_EOL;
+	echo 'SUMMARY:' .  $event->activity->name . PHP_EOL;
+	echo 'CATEGORIES:' . implode(',', explode(':', $event->activity->name)) . PHP_EOL;
+	echo 'DTSTART:' . $event->startDate->format('Ymd\THis') . PHP_EOL;
+	echo 'DTEND:' . $event->endDate->format('Ymd\THis') . PHP_EOL;
+	
+	$description = '';
+	
+	$details = array();
+	foreach($event->resources as $resource) {
+		$details[$resource->category][] = $resource->name;
+	}
+
+	$description .= 'Unité ' . implode(', ', $details['category6']) . '\n';
+
+	if(array_key_exists('trainee', $details) && count($details['trainee'])) {
+		sort($details['trainee']);
+		$description .= 'Groupe' . ((count($details['trainee']) > 1) ? 's' : '') . ': ' . implode(', ', $details['trainee']) . PHP_EOL;
+	}
+
+	if(array_key_exists('classroom', $details) && count($details['classroom'])) {
+		$description .= 'Salle' . ( (count($details['classroom']) != 1) ? 's' : '') . ' : '. implode(', ', $details['classroom']) . PHP_EOL;
+	} else {
+		$description .= 'Pas de salle' . PHP_EOL;
+	}
+
+	if(array_key_exists('instructor', $details) && count($details['instructor'])) {
+		$description .= 'Intervenant' . ((count($details['instructor']) != 1) ? 's' : '') . ' : '. implode(', ', $details['instructor']) . PHP_EOL;
+	} else {
+		$description .= 'Heures non surveillés' . PHP_EOL;
+	}
+
+	echo 'DESCRIPTION:' . $description . PHP_EOL;
+
+	echo 'END:VEVENT' . PHP_EOL;
+	
+}
+
+?>END:VCALENDAR

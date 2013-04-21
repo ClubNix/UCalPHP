@@ -1,0 +1,28 @@
+{
+    "name": "lewinp/u-cal",
+    "description": "Module UCal.",
+    "type": "zf-module",
+    "license": "BSD-3-Clause",
+    "keywords": [
+    ],
+    "homepage": "https://github.com/lewinp/UCal",
+    "authors": [
+        {
+            "name": "Philippe Lewin",
+            "email": "philippe.lewin@gmail.com",
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+    },
+    "suggest": {
+    },
+    "autoload": {
+        "psr-0": {
+            "UCal": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+<div class="row-fluid">
+	<div class="span8 hero-unit">
+		<form action="" method="post">
+		<h3>Modifier sa configuration UCal</h3>
+		<table>
+			<tr>
+				<td colspan="2"><input type="text" name="resources" placeholder="Resources ADE... ex: 123,456,789" style="width:450px" /></td>
+			</tr>
+			<tr>
+				<td><input type="text" name="login" placeholder="Login ESIEE..." /></td>
+				<td><input type="password" name="password" placeholder="Mot de passe..." /></td>
+			</tr>
+			<tr>
+				<td><button type="submit" class="btn">Sauver la configuration</button></td>
+			</tr>
+		</table>
+		<?php
+			if(isset($this->login)) {
+				echo 'Flux ICS : https://clubnix.fr/ucal/flow/ics/' . htmlentities($this->login);
+			}
+		?>
+			
+		</form>
+		<?php
+			foreach($this->messages as $message) {
+				echo $message . '<br />';
+			}
+		?>
+	</div>
+	<div class="span4" style="text-align:center">
+	    <h1><?php echo sprintf($this->translate('%sUCal%s') . ' 4', '<span class="zf-green">', '</span>') ?></h1>
+	    <p>Faciliter l'accès à votre emplois du temps !</p>
+	</div>
+	
+</div>
+
+<div class="row">
+    <div class="span8">
+        Récupérer son flux :<br />
+        https://clubnix.fr/ucal/flow/ics/[loginesiee]
+    </div>
+
+   <div class="span4">
+       <h2><?php echo $this->translate('Assistance') ?></h2>
+       <p>Pour toute demande d'assistance ou question technique sur UCal, contactez <a href="mailto:lewinp@esiee.fr">lewinp@esiee.fr</a>.</p>
+   </div>
+</div>
