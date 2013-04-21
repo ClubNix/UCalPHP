@@ -9,7 +9,7 @@
     "authors": [
         {
             "name": "Philippe Lewin",
-            "email": "philippe.lewin@gmail.com",
+            "email": "philippe.lewin@gmail.com"
         }
     ],
     "require": {
@@ -26,3 +26,4 @@
         ]
     }
 }
+
