@@ -7,6 +7,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
+use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Adapter\Ldap as AuthAdapter;
+use Zend\Authentication\Result;
+
 use UCal\Model\ADE;
 
 use Doctrine\ORM\EntityManager;
@@ -25,22 +29,46 @@ class IndexController extends AbstractActionController
     	$resources = $this->params()->fromPost('resources');
 
     	if($login != null && $password != null) {
-    		$account = $this->getEntityManager()->find('UCal\Model\Account', $login);
-    		if($account == NULL) {
-    			$account = new \UCal\Model\Account();
-    			$account->login = $login;
-    		}
+    		
+    		$auth = new AuthenticationService();
+    		
+    		$config = $this->getServiceLocator()->get('Config');
+    		
+    		$username = sprintf($config['ucal']['username_format'], $login);
 
-    		$account->resourcesIds = $resources;
-	    	$this->getEntityManager()->merge($account);
-    			
-	    	$this->getEntityManager()->flush();
-	    		
-	    	return new ViewModel(array (
-	    		'messages'     => array(),
-	    		'login'        => $login,
-	    		'resourcesIds' => $resources,
-	    	));
+    		$adapter = new AuthAdapter($config['ucal']['ldap_options'], $username, $password);
+    		
+    		$result = $auth->authenticate($adapter);
+    		
+    		switch ($result->getCode()) {
+    		
+    			case Result::FAILURE_IDENTITY_NOT_FOUND:
+    			case Result::FAILURE_CREDENTIAL_INVALID:
+    				return new ViewModel(array('messages' => array('Identifiants invalides. Recommencez.')));
+    				break;
+    		
+    			case Result::SUCCESS:
+		    		$account = $this->getEntityManager()->find('UCal\Model\Account', $login);
+		    		if($account == NULL) {
+		    			$account = new \UCal\Model\Account();
+		    			$account->login = $login;
+		    		}
+		
+		    		$account->resourcesIds = $resources;
+			    	$this->getEntityManager()->merge($account);
+		    			
+			    	$this->getEntityManager()->flush();
+			    		
+			    	return new ViewModel(array (
+			    		'messages'     => array(),
+			    		'login'        => $login,
+			    		'resourcesIds' => $resources,
+			    	));
+    				break;
+    			default:
+    				return new ViewModel(array('messages' => array('Erreur de connexion.')));
+    				break;
+    		}
     	}
 
     	return new ViewModel(array('messages' => array()));
