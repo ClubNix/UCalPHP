@@ -23,19 +23,19 @@ foreach($events as $event) {
 
 	if(array_key_exists('trainee', $details) && count($details['trainee'])) {
 		sort($details['trainee']);
-		$description .= 'Groupe' . ((count($details['trainee']) > 1) ? 's' : '') . ': ' . implode(', ', $details['trainee']) . PHP_EOL;
+		$description .= 'Groupe' . ((count($details['trainee']) > 1) ? 's' : '') . ': ' . implode(', ', $details['trainee']) . '\n';
 	}
 
 	if(array_key_exists('classroom', $details) && count($details['classroom'])) {
-		$description .= 'Salle' . ( (count($details['classroom']) != 1) ? 's' : '') . ' : '. implode(', ', $details['classroom']) . PHP_EOL;
+		$description .= 'Salle' . ( (count($details['classroom']) != 1) ? 's' : '') . ' : '. implode(', ', $details['classroom']) . '\n';
 	} else {
-		$description .= 'Pas de salle' . PHP_EOL;
+		$description .= 'Pas de salle' . '\n';
 	}
 
 	if(array_key_exists('instructor', $details) && count($details['instructor'])) {
-		$description .= 'Intervenant' . ((count($details['instructor']) != 1) ? 's' : '') . ' : '. implode(', ', $details['instructor']) . PHP_EOL;
+		$description .= 'Intervenant' . ((count($details['instructor']) != 1) ? 's' : '') . ' : '. implode(', ', $details['instructor']) . '\n';
 	} else {
-		$description .= 'Heures non surveillés' . PHP_EOL;
+		$description .= 'Heures non surveillés' . '\n';
 	}
 
 	echo 'DESCRIPTION:' . $description . PHP_EOL;
