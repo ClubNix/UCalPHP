@@ -71,16 +71,15 @@ class Event
     		case 'startDate':
     			$startDate = new \DateTime();
     			$start = $this->slot*15 + 7*60+30;
-    			$startDate->setISODate(date('o'), $this->week - 19, $this->day+1);
     			$startDate->setTime((int) ($start/60), $start%60, 0);
-    			
+    			$startDate->setISODate(date('o'), $this->week - 19, $this->day+1);
     			return $startDate;
     			break;
     		case 'endDate':
     			$endDate = new \DateTime();
     			$end = $this->slot*15 + 7*60+30 + $this->duration*15;
-    			$endDate->setISODate(date('o'), $this->week - 19, $this->day+1);
     			$endDate->setTime((int) ($end/60), $end%60, 0);
+    			$endDate->setISODate(date('o'), $this->week - 19, $this->day+1);
     			return $endDate;
     			break;
     		default:
