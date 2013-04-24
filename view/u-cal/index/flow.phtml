@@ -13,8 +13,8 @@ foreach($events as $event) {
 	echo 'BEGIN:VEVENT' . PHP_EOL;
 	echo 'SUMMARY:' .  $event->activity->name . PHP_EOL;
 	echo 'CATEGORIES:' . implode(',', explode(':', $event->activity->name)) . PHP_EOL;
-	echo 'DTSTART:' . $event->startDate->format('Ymd\THis') . PHP_EOL;
-	echo 'DTEND:' . $event->endDate->format('Ymd\THis') . PHP_EOL;
+	echo 'DTSTART;TZID=Europe/Paris:' . $event->startDate->format('Ymd\THis') . PHP_EOL;
+	echo 'DTEND;TZID=Europe/Paris:' . $event->endDate->format('Ymd\THis') . PHP_EOL;
 	
 	$description = '';
 	
