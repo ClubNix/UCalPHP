@@ -36,6 +36,11 @@ class Event
     protected $slot;
 
     /**
+     * @ORM\Column(name="eventColor",type="string");
+     */
+    protected $color;
+
+    /**
      * @ORM\Column(name="eventDuration",type="integer");
      */
     protected $duration;
